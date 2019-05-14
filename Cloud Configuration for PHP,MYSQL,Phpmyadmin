@@ -1,0 +1,163 @@
+Cloud Configuration For Install Apache, MySQL, PHP (LAMP) Stack on Ubuntu 18.04
+--------------------------------------------------------------------------------------------------------------------
+For making super user type "sudo su" else 
+
+
+1. Install Apache
+
+sudo apt update && sudo apt install apache2
+
+2. Configure Firewall
+----------------------------------------
+sudo ufw allow OpenSSH
+
+sudo ufw allow in "Apache Full"
+
+sudo ufw enable    (Not needed)
+
+sudo ufw status
+
+3. Test Apache
+------------------------------
+sudo service apache2 status
+
+4. Install MySQL
+-------------------------------------------------------
+sudo apt update && sudo apt install mysql-server
+
+sudo service mysql status
+5. MySQL Security
+
+sudo mysql_secure_installation
+
+-> ENTER N|Y|Y|Y|Y
+
+sudo mysqladmin -p -u root version
+
+6. Install PHP
+--------------------------------------------------------------------------
+sudo apt update && sudo apt install php libapache2-mod-php php-mysql
+
+php -version
+
+7. Installing phpMyAdmin
+------------------------------------------------------------------------------------------
+sudo apt update && sudo apt install phpmyadmin
+
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+
+sudo a2enconf phpmyadmin.conf
+
+sudo service apache2 reload
+
+8. Create MySQL User
+-------------------------------------------------------------------------------------------------------------------
+sudo mysql
+(and you will get a new window like "mysql>" type all the code below here)
+
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';  (here you can set yourown user name and password)
+
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';      (doing privilege to the created user)
+
+FLUSH PRIVILEGES;					     (Resteing the privilege)
+
+exit or ctr+Z
+
+9. Secure PhpMyAdmin
+--------------------------------------------------------------------------------------------------------------------
+sudo nano /etc/apache2/conf-available/phpmyadmin.conf        (it opens a new edit box for editing you have to click i "insert")
+
+(change the Alias in that box to the below)
+Alias /your_url /usr/share/phpmyadmin (after that we have to click save so that you have to click esc then simply type :wq then enter)
+
+sudo service apache2 reload
+
+10. Install ZIP/Unzip
+--------------------------------------------------------------------------------------------------------------------------
+apt-get update
+
+apt-get install zip unzip
+
+11. Enable .htaacess
+-------------------------------------------------------------
+sudo apt-get update
+
+sudo a2enmod rewrite
+
+sudo nano /etc/apache2/sites-enabled/000-default.conf    (it opens a new edit box for editing you have to click i "insert")
+
+(change the file)
+<Directory "/var/www/html">
+  AllowOverride All
+</Directory>
+
+
+12. Configure Apache File
+-----------------------------------------------------------
+sudo nano /etc/apache2/apache2.conf      (it opens a new edit box for editing you have to click i "insert")
+
+(change the file)
+<Directory /var/www/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+ </Directory>
+
+ <Directory /var/www/html>
+    Options -Indexes
+ </Directory>
+
+(put this one last of the page)
+ ServerSignature Off
+ ServerTokens Prod
+
+13. Install CURL
+-----------------------------------------------------------------
+sudo apt-get install curl
+
+sudo service apache2 restart
+
+sudo apt-get install php7.0-curl
+
+sudo service apache2 restart
+
+14. install SSL Certificate
+-----------------------------------------------------------------
+sudo apt-get update
+
+sudo add-apt-repository ppa:certbot/certbot
+
+sudo apt-get update
+
+sudo apt-get install python-certbot-apache
+
+sudo apachectl stop
+
+letsencrypt --authenticator standalone --installer apache -d example.com
+
+sudo service apache2 start
+
+service apache2 restart
+
+15. Setup SSH Key
+-----------------------------------------------------------------
+sudo apt-get update
+
+mkdir .ssh
+
+cd ~/.ssh
+
+touch authorized_keys
+
+sudo nano authorized_keys
+
+sudo nano /etc/ssh/sshd_config
+
+prohibit-password
+
+sudo systemctl restart sshd.service
+
+service apache2 restart
+
+Finished then type sudo apt-get update
+-------------------------------------------------------------------------------------------------------------------------------------------------------

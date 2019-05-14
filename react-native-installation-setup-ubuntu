@@ -1,0 +1,146 @@
+1. INSTALL NODEJS
+Since React native is a framework of JavaScript, it requires to have Nodejs(A JavaScript runtime) installed.
+
+	curl -sL https://deb.nodesource.com/setup_9.x
+	sudo -E bash -
+	sudo apt-get install -y nodejs
+to check node version
+	
+	node -v							
+
+2. INSTALL NPM
+NPM will be installed with the Nodejs installation itself. However, you can install the latest version for npm.
+
+	apt install npm	
+	sudo npm install npm@latest -g
+
+to check npm version 
+	
+	npm -v
+
+3. INSTALL JDK
+Usually, Native Android apps build in Java. So Java Development Kit is required.
+
+	sudo add-apt-repository ppa:openjdk-r/ppa
+	sudo apt-get update
+	sudo apt-get install openjdk-8-jdk
+
+4.INSTALL ANDROID STUDIO
+Android studio needs to be installed for working with React Native development. You can easily download it from
+
+	https://developer.android.com/studio/index.html
+
+5.INSTALL ANDROID SDK
+Android Studio installs the latest Android SDK by default. Building a React Native app with native code, however, requires the Android 6.0 (Marshmallow) SDK in particular. Additional Android SDKs can be installed through the SDK Manager in Android Studio.
+
+The SDK Manager can be accessed from the Welcome to Android Studio screen. Click on Configure, then select SDK Manager.
+
+SDK manager -> SDK platforms
+
+then check the box next to “Show Package Details” in the bottom right corner. Look for and expand the Android 6.0 (Marshmallow) entry, then make sure the following items are all checked:
+
+Google APIs
+Android SDK Platform 23
+Intel x86 Atom_64 System Image
+Google APIs Intel x86 Atom_64 System Image
+CONFIGURE ANDROID_HOME ENVIRONMENT VARIABLE
+The React Native tools require some environment variables to be set up in order to build apps with native code.
+
+	export ANDROID_HOME=$HOME/Android/Sdk 
+	export PATH=$PATH:$ANDROID_HOME/tools 
+	export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+	sudo nano $HOME/.bash_profile
+
+Paste the copied code on the terminal screen.
+
+Press Ctrl + O (Write out)
+Then press Enter
+And press Ctrl + x (exit)
+
+6. INSTALL WATCHMAN
+Watchman is a tool used for watch files and record when they change. It is essential where you need Live reloading of apps when code changes.
+
+	git clone https://github.com/facebook/watchman.git
+	cd watchman
+	git checkout v4.9.0  # the latest stable release
+	./autogen.sh
+	./configure
+	make
+	sudo make install
+ or 
+	brew install node
+	brew install watchman
+
+7. INSTALL REACT NATIVE CLI
+You can easily install react native CLI using npm.
+
+	npm install -g react-native-cli
+
+8. CHOOSING YOUR PROJECT DESTINATION (optional)
+In your Ubuntu system, you can choose any destination to do your projects. But in my case, I will choose /var/www/html for doing all the projects in Ubuntu. It is just the default root folder of the web server of your Ubuntu system.
+
+	cd /var/www/html
+type these command to set node;
+
+	ln -s /usr/bin/nodejs /usr/bin/node
+
+9. CREATING NEW APPLICATION
+Using react native CLI, you can create a new React Native project.
+
+	react-native init AwesomeProject
+	If the above command is failing, use
+	sudo react-native init AwesomeProject
+
+10. SETTING PERMISSIONS FOR THE PROJECT DIRECTORY
+You must set permissions for working with your project directory since as by default your system may only allow you to change the contents in your project directory as root.
+
+	sudo chmod 777 -R /var/www/html/AwesomeProject
+If your project directory is not inside /var/www/html (If you skip 5th step), then use your own directory URL in the top command.
+
+11. CHOOSING THE CODE EDITOR
+You can choose your own favorite code editor for editing your project. But in my case, I choose Visual studio Code(VS code).
+
+	wget https://code.visualstudio.com/#alt-downloads
+	sudo dpkg -i /path/to/deb/file
+	sudo apt-get install -f
+
+From the above link, you can download VS code .deb file compatible with Ubuntu/Debian.
+
+12. DIRECTING TO YOUR PROJECT FOLDER AND EDITING
+After installing VS code, direct to your project folder.
+
+	cd AwesomeProject
+
+Open your project using VS code by just typing the below command.
+
+On Terminal,
+
+	code .
+
+Form now on, you can use VS code Terminal instead of native Ubuntu Terminal because you can use the Terminal without going out of your code editor.
+
+13. RUNNING YOUR APPLICATION ON YOUR ANDROID DEVICE
+Now you need to run the project in your Android phone(It is recommended you to use Android 6.0 and devices, but lower versions are also compatible).
+
+On your mobile device,
+
+Go to Settings->About
+
+You can see a Build Version menu there. Continually click the option until it enables the Developer options
+
+Now, return to Settings. You can see the Developer options menu there. Enable it. Also, enable the USB debugging option in it.
+
+Connect your mobile device with your Ubuntu system using the USB port. Type the below command to check whether your mobile device is connected or not.
+
+On Terminal,
+
+	adb devices
+
+Now, From the VS studio terminal, run
+
+On Terminal,
+
+	react-native run-android
+
+(Go to View -> Integrated Terminal from VS code’s top menubar)

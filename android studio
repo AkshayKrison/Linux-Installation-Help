@@ -1,0 +1,49 @@
+Installing Java
+
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+After that
+
+sudo apt-get install oracle-java8-set-default
+
+Installing Android Studio
+
+    Download Android Studio from here, use All Android Studio Packages
+
+    Extract the archive file into an appropriate location for your applications, eg: /opt. Use the filename of your downloaded archive, in my example android-studio-ide-141.2178183-linux.zip
+
+    sudo unzip android-studio-ide-141.2178183-linux.zip -d /opt
+
+    To launch Android Studio, navigate to the /opt/android-studio/bin directory in a terminal and execute 
+
+	./studio.sh.
+
+
+
+incase any error use this 
+and do it agian
+
+	sudo apt-get install libz1 libncurses5 libbz2-1.0:i386 libstdc++6 libbz2-1.0
+
+
+Create a desktop file
+
+Create a new file androidstudio.desktop by running the command:
+open terminal and type the below code
+
+nano ~/.local/share/applications/androidstudio.desktop
+
+and add the lines below
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Exec="/opt/android-studio/bin/studio.sh" %f
+Icon=/opt/android-studio/bin/studio.png
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=android-studio
