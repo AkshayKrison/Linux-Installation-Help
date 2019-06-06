@@ -1,0 +1,34 @@
+After Downloading the Oracle JDK you have to SCP it to the EC2 machine. Use following command to copy data from your local machine to ec2 instance.
+
+  scp -i aTest.pem jdk_tar.gz ubuntu@ec2-amazonaws.com :/home/ubuntu
+  cp /home/ubuntu/jdk_tar.gz ~/Downloads/
+  
+Now you should have installed Java to the machine successfully. Now we have to install tomcat to the machine. Find the latest stable tomcat version and download it’s tar.gz file. Same as above step, transfer the file using the SCP command.
+
+  scp -i aTest.pem apache-tomcat-9.0.0.M10.tar.gz ubuntu@ec2-amazonaws.com :/home/ubuntu
+
+Now extract this file to /opt/. To extract this file use following command.
+
+  tar xf apache-tomcat-9.0.0.M10.tar.gz -C /opt/
+
+Now what you have to do is transfer your Java Application (.war) to the ec2 machine. To do that, use the SCP command again. The command will be like this.
+
+  scp -i aTest.pem testAPP-1.0-SNAPSHOT.war ubuntu@ec2–compute-1.amazonaws.com:/home/ubuntu/ testAPP-1.0-SNAPSHOT.war
+
+Now you have to copy your .war file to webapp folder. Use following command with suitable changes.
+
+  cp /home/ubuntu/testAPP-1.0-SNAPSHOT.war /opt/apache-tomcat-9.0.0.M10/webapps/
+
+So now you only have to do is, starting the tomcat server. To do that, go to bin folder of the tomcat installation.
+  
+  cd /opt/apache-tomcat-9.0.0.M10/bin
+
+To start the server
+
+  ./catalina.sh start
+
+To stop the server
+
+  ./catalina.sh stop
+
+When you start the server, you will be able access your web application through your ec2 machine public DNS.
