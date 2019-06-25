@@ -1,0 +1,11 @@
+install sendmail by command:
+
+ sudo apt-get install sendmail
+check the service whether its started or not by execuring follwing command
+
+service sendmail status
+Note: Output of above command should be something - 'Active: active (running)'
+
+start the service if it is not running by following command
+
+service sendmail start
